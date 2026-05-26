@@ -213,6 +213,43 @@ app.post('/api/fireberry/query', auth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+
+app.get('/api/debug/fireberry/:objectType/:id', async (req, res) => {
+  try {
+    const response = await fetch(`${FIREBERRY_API}/record/${req.params.objectType}/${req.params.id}`, {
+      headers: { 'tokenid': FIREBERRY_TOKEN, 'Content-Type': 'application/json' }
+    });
+    const data = await response.json();
+    console.log('FIREBERRY RAW:', JSON.stringify(data).substring(0, 500));
+    res.json(data);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/debug/orders/:recordId', async (req, res) => {
+  try {
+    const results = {};
+    for (const ot of [1,2,3,4,5,6,7,8,9,10,14,15,16,17,18,19,20]) {
+      const body = {
+        objecttype: ot,
+        query: `(accountid = '${req.params.recordId}') OR (regardingobjectid = '${req.params.recordId}') OR (contactid = '${req.params.recordId}')`,
+        pageSize: 10, page: 1
+      };
+      const response = await fetch(`${FIREBERRY_API}/query`, {
+        method: 'POST',
+        headers: { 'tokenid': FIREBERRY_TOKEN, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      const records = data.Data || data.data || data.records || [];
+      if (Array.isArray(records) && records.length > 0) {
+        results[ot] = records;
+        console.log(`ORDERS FOUND at objectType ${ot}:`, records.length);
+      }
+    }
+    res.json(results);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
