@@ -11,10 +11,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'r2c-secret-2024';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
+const SUPA_URL = process.env.SUPABASE_URL || '';
+const SUPA_KEY = process.env.SUPABASE_KEY || '';
+console.log('SUPABASE_URL:', SUPA_URL || 'NO DEFINIDA');
+console.log('SUPABASE_KEY:', SUPA_KEY ? SUPA_KEY.substring(0,20)+'...' : 'NO DEFINIDA');
+const supabase = createClient(SUPA_URL, SUPA_KEY);
 
 const FIREBERRY_API = 'https://api.powerlink.co.il/api';
 const FIREBERRY_TOKEN = process.env.FIREBERRY_TOKEN || '4863e71d-5503-47b3-8745-5217fe928861';
@@ -43,9 +44,11 @@ function adminAuth(req, res, next) {
 // ── Login ────────────────────────────────────────────────────
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
+  console.log('Login attempt:', username);
   const { data: user, error } = await supabase
     .from('agents').select('*').eq('username', username).single();
-  if (error || !user) return res.status(401).json({ error: 'Usuario no encontrado' });
+  console.log('Supabase result - user:', user ? 'found' : 'null', 'error:', error ? error.message : 'none');
+  if (error || !user) return res.status(401).json({ error: 'Usuario no encontrado - ' + (error ? error.message : 'null user') });
   const valid = await bcrypt.compare(password, user.password_hash);
   if (!valid) return res.status(401).json({ error: 'Contraseña incorrecta' });
   const token = jwt.sign({ id: user.id, username: user.username, name: user.name, is_admin: user.is_admin }, JWT_SECRET, { expiresIn: '7d' });
