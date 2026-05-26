@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relocation2Canada — Pagos</title>
+<title>Relocation2Canada â€” Pagos</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +24,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 .auth-card { background: white; border: 0.5px solid var(--border); border-radius: 14px; padding: 2rem; width: 100%; max-width: 360px; }
 .auth-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 0.5px solid var(--border); }
 .logo-box { width: 42px; height: 42px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.logo-box img { width: 32px; height: 32px; object-fit: contain; }
+.logo-box img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
 .logo-box-fallback { width: 42px; height: 42px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .logo-box-fallback i { font-size: 20px; color: white; }
 .brand-name { font-size: 15px; font-weight: 600; color: var(--navy); }
@@ -166,7 +166,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
   <div class="auth-card">
     <div class="auth-logo-row">
       <div class="logo-box" id="auth-logo-login">
-        <img src="https://i.imgur.com/pqZTGKp.png" alt="R2C" onerror="this.src='';this.parentElement.innerHTML='<i class=\'ti ti-map-pin\' style=\'font-size:20px;color:white;\'></i>'" />
+        <img src="/logo.png" alt="R2C" onerror="this.src='';this.parentElement.innerHTML='<i class=\'ti ti-map-pin\' style=\'font-size:20px;color:white;\'></i>'" />
       </div>
       <div>
         <div class="brand-name">Relocation2Canada</div>
@@ -174,10 +174,11 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
       </div>
     </div>
     <div class="field"><label>Usuario</label><input type="text" id="l-user" placeholder="tu.usuario" autocomplete="username" /></div>
-    <div class="field"><label>Contraseña</label><input type="password" id="l-pass" placeholder="••••••••" /></div>
+    <div class="field"><label>ContraseÃ±a</label><input type="password" id="l-pass" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" /></div>
     <button class="btn-primary" id="btn-login" onclick="login()">Entrar</button>
     <div class="auth-err" id="login-err"></div>
-    <div class="auth-link">¿Primera vez? <a onclick="showScreen('register-screen')">Regístrate con código de invitación</a></div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;">El primer ingreso puede tardar ~30 seg mientras el servidor despierta</div>
+    <div class="auth-link">Â¿Primera vez? <a onclick="showScreen('register-screen')">RegÃ­strate con cÃ³digo de invitaciÃ³n</a></div>
   </div>
 </div>
 
@@ -185,19 +186,19 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 <div id="register-screen" class="screen">
   <div class="auth-card">
     <div class="auth-logo-row">
-      <div class="logo-box"><img src="https://i.imgur.com/pqZTGKp.png" alt="R2C" /></div>
+      <div class="logo-box"><img src="/logo.png" alt="R2C" /></div>
       <div>
         <div class="brand-name">Crear cuenta</div>
-        <div class="brand-sub">Necesitas un código de invitación</div>
+        <div class="brand-sub">Necesitas un cÃ³digo de invitaciÃ³n</div>
       </div>
     </div>
     <div class="field"><label>Nombre completo</label><input type="text" id="r-name" placeholder="Tu nombre completo" /></div>
     <div class="field"><label>Usuario</label><input type="text" id="r-user" placeholder="sin espacios, ej: maria.lopez" /></div>
-    <div class="field"><label>Contraseña</label><input type="password" id="r-pass" placeholder="Mínimo 6 caracteres" /></div>
-    <div class="field"><label>Código de invitación</label><input type="text" id="r-code" placeholder="R2C-XXXXXX" style="text-transform:uppercase;letter-spacing:0.06em;font-family:monospace;" /></div>
+    <div class="field"><label>ContraseÃ±a</label><input type="password" id="r-pass" placeholder="MÃ­nimo 6 caracteres" /></div>
+    <div class="field"><label>CÃ³digo de invitaciÃ³n</label><input type="text" id="r-code" placeholder="R2C-XXXXXX" style="text-transform:uppercase;letter-spacing:0.06em;font-family:monospace;" /></div>
     <button class="btn-primary" id="btn-reg" onclick="register()">Crear cuenta</button>
     <div class="auth-err" id="reg-err"></div>
-    <div class="auth-link"><a onclick="showScreen('login-screen')">← Volver al login</a></div>
+    <div class="auth-link"><a onclick="showScreen('login-screen')">â† Volver al login</a></div>
   </div>
 </div>
 
@@ -205,7 +206,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 <div id="app-screen" class="screen">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="topbar-logo" id="topbar-logo"><img src="https://i.imgur.com/pqZTGKp.png" alt="R2C" /></div>
+      <div class="topbar-logo" id="topbar-logo"><img src="/logo.png" alt="R2C" /></div>
       <div class="brand">
         <span class="brand-main">Relocation2Canada</span>
         <span class="brand-sm">Seguimiento de pagos</span>
@@ -239,17 +240,17 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 
     <!-- ADMIN -->
     <div id="tab-admin" style="display:none;">
-      <div class="page-title">Administración</div>
+      <div class="page-title">AdministraciÃ³n</div>
       <div class="page-sub">Gestiona el acceso del equipo</div>
 
       <div class="admin-box">
-        <div class="admin-section-h"><i class="ti ti-ticket"></i> Generar código de invitación</div>
-        <div class="code-note">Genera un código y mándalo al agente por WhatsApp. Solo puede usarse una vez.</div>
+        <div class="admin-section-h"><i class="ti ti-ticket"></i> Generar cÃ³digo de invitaciÃ³n</div>
+        <div class="code-note">Genera un cÃ³digo y mÃ¡ndalo al agente por WhatsApp. Solo puede usarse una vez.</div>
         <div id="new-code-area" style="display:none;">
           <div class="code-val" id="new-code-val"></div>
-          <button class="btn-copy-code" onclick="copyCode()"><i class="ti ti-copy" style="font-size:13px;"></i> Copiar código</button>
+          <button class="btn-copy-code" onclick="copyCode()"><i class="ti ti-copy" style="font-size:13px;"></i> Copiar cÃ³digo</button>
         </div>
-        <button class="btn-generate" onclick="generateInvite()"><i class="ti ti-plus"></i> Generar nuevo código</button>
+        <button class="btn-generate" onclick="generateInvite()"><i class="ti ti-plus"></i> Generar nuevo cÃ³digo</button>
       </div>
 
       <div class="admin-box">
@@ -258,7 +259,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
       </div>
 
       <div class="admin-box">
-        <div class="admin-section-h"><i class="ti ti-ticket"></i> Historial de códigos</div>
+        <div class="admin-section-h"><i class="ti ti-ticket"></i> Historial de cÃ³digos</div>
         <div id="invites-table"></div>
       </div>
     </div>
@@ -271,7 +272,7 @@ let currentUser = JSON.parse(localStorage.getItem('r2c_user') || 'null');
 let clients = [];
 let lastCode = '';
 
-// ── Helpers ────────────────────────────────────────
+// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -281,13 +282,13 @@ function initials(name) {
   return name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
 }
 function fmtMoney(n) {
-  if (n === undefined || n === null || n === '') return '—';
+  if (n === undefined || n === null || n === '') return 'â€”';
   const num = parseFloat(n);
-  if (isNaN(num)) return '—';
+  if (isNaN(num)) return 'â€”';
   return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 function fmtDate(d) {
-  if (!d) return '—';
+  if (!d) return 'â€”';
   try {
     return new Date(d).toLocaleDateString('es-MX', { year: 'numeric', month: '2-digit', day: '2-digit' });
   } catch { return d; }
@@ -315,18 +316,30 @@ async function api(method, path, body) {
   return res.json();
 }
 
-// ── Auth ───────────────────────────────────────────
+// â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function login() {
   const username = document.getElementById('l-user').value.trim();
   const password = document.getElementById('l-pass').value;
   const err = document.getElementById('login-err');
   const btn = document.getElementById('btn-login');
-  if (!username || !password) { err.textContent = 'Ingresa usuario y contraseña'; return; }
+  if (!username || !password) { err.textContent = 'Ingresa usuario y contraseÃ±a'; return; }
   btn.disabled = true; btn.textContent = 'Entrando...'; err.textContent = '';
-  const data = await fetch('/api/login', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
-  }).then(r => r.json());
+  let data;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch('/api/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    data = await res.json();
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Entrar';
+    err.textContent = e.name === 'AbortError' ? 'El servidor tardÃ³ mucho â€” intentÃ¡ de nuevo en 30 segundos' : 'Error de conexiÃ³n: ' + e.message;
+    return;
+  }
   btn.disabled = false; btn.textContent = 'Entrar';
   if (data.error) { err.textContent = data.error; return; }
   token = data.token;
@@ -344,12 +357,24 @@ async function register() {
   const err = document.getElementById('reg-err');
   const btn = document.getElementById('btn-reg');
   if (!name || !username || !password || !invite_code) { err.textContent = 'Completa todos los campos'; return; }
-  if (password.length < 6) { err.textContent = 'La contraseña debe tener al menos 6 caracteres'; return; }
+  if (password.length < 6) { err.textContent = 'La contraseÃ±a debe tener al menos 6 caracteres'; return; }
   btn.disabled = true; btn.textContent = 'Creando cuenta...'; err.textContent = '';
-  const data = await fetch('/api/register', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password, name, invite_code })
-  }).then(r => r.json());
+  let data;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch('/api/register', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, name, invite_code }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    data = await res.json();
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Crear cuenta';
+    err.textContent = e.name === 'AbortError' ? 'El servidor tardÃ³ mucho â€” intentÃ¡ de nuevo' : 'Error: ' + e.message;
+    return;
+  }
   btn.disabled = false; btn.textContent = 'Crear cuenta';
   if (data.error) { err.textContent = data.error; return; }
   token = data.token;
@@ -368,7 +393,7 @@ function logout() {
 document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 document.getElementById('r-code').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase(); });
 
-// ── App ────────────────────────────────────────────
+// â”€â”€ App â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function showApp() {
   showScreen('app-screen');
   document.getElementById('agent-name').textContent = currentUser.name;
@@ -385,7 +410,7 @@ function switchTab(tab, btn) {
   if (tab === 'admin') loadAdmin();
 }
 
-// ── Clients ────────────────────────────────────────
+// â”€â”€ Clients â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadClients() {
   const data = await api('GET', '/api/clients');
   if (data.error) { logout(); return; }
@@ -426,7 +451,7 @@ async function addClient() {
 }
 
 async function removeClient(dbId) {
-  if (!confirm('¿Eliminar este cliente de tu lista?')) return;
+  if (!confirm('Â¿Eliminar este cliente de tu lista?')) return;
   await api('DELETE', `/api/clients/${dbId}`);
   clients = clients.filter(c => c.id !== dbId);
   render();
@@ -467,7 +492,7 @@ function startEditInvestment(dbId) {
   if (c) { c.editingInvestment = true; render(); setTimeout(() => { const inp = document.getElementById('inv-input-' + dbId); if (inp) inp.focus(); }, 50); }
 }
 
-// ── Render ─────────────────────────────────────────
+// â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function getOrderPayMethod(order) {
   return getField(order, 'cf_formapago', 'paymentmethod', 'paymentmethodcode', 'cf_metodopago', 'paymenttype') || '';
 }
@@ -494,7 +519,7 @@ function render() {
 
   list.innerHTML = clients.map(c => {
     if (c.loading) return `<div class="ccard"><div class="ccard-head" style="cursor:default;">
-      <div class="cav">…</div>
+      <div class="cav">â€¦</div>
       <div class="cmeta"><div class="cname"><span class="spinner"></span>Cargando...</div><div class="csub">${c.url}</div></div>
     </div></div>`;
 
@@ -507,7 +532,7 @@ function render() {
     const pendingColor = pending > 0 ? 'red' : 'green';
 
     let badge = '<span class="badge b-ok">Al corriente</span>';
-    if (totalInv === 0) badge = '<span class="badge b-blue">Sin inversión</span>';
+    if (totalInv === 0) badge = '<span class="badge b-blue">Sin inversiÃ³n</span>';
     else if (pending > totalInv * 0.5) badge = '<span class="badge b-err">Deuda alta</span>';
     else if (pending > 0) badge = '<span class="badge b-warn">Pendiente</span>';
 
@@ -524,7 +549,7 @@ function render() {
     // Orders table
     let ordersHtml = '';
     if (orders.length === 0) {
-      ordersHtml = '<div class="no-orders"><i class="ti ti-receipt" style="font-size:20px;display:block;margin-bottom:6px;opacity:0.3;"></i>Sin órdenes registradas aún</div>';
+      ordersHtml = '<div class="no-orders"><i class="ti ti-receipt" style="font-size:20px;display:block;margin-bottom:6px;opacity:0.3;"></i>Sin Ã³rdenes registradas aÃºn</div>';
     } else {
       const rows = orders.map((o, idx) => {
         const payMethod = getOrderPayMethod(o);
@@ -533,16 +558,16 @@ function render() {
         const date = fmtDate(getOrderDate(o));
         return `<tr>
           <td>${date}</td>
-          <td class="order-num">${orderNum || '—'}</td>
+          <td class="order-num">${orderNum || 'â€”'}</td>
           <td>Cuota #${idx + 1}</td>
-          <td>${payMethod ? `<span class="pay-method">${payMethod}</span>` : '—'}</td>
+          <td>${payMethod ? `<span class="pay-method">${payMethod}</span>` : 'â€”'}</td>
           <td class="tar"><strong>${fmtMoney(amount)}</strong></td>
         </tr>`;
       }).join('');
       ordersHtml = `<div class="ptable-wrap">
         <table class="ptable">
           <thead><tr>
-            <th>Fecha</th><th>Nº orden</th><th>Descripción</th><th>Forma de pago</th><th class="tar">Monto</th>
+            <th>Fecha</th><th>NÂº orden</th><th>DescripciÃ³n</th><th>Forma de pago</th><th class="tar">Monto</th>
           </tr></thead>
           <tbody>${rows}</tbody>
         </table>
@@ -554,7 +579,7 @@ function render() {
         <div class="cav">${initials(name)}</div>
         <div class="cmeta">
           <div class="cname">${name}</div>
-          <div class="csub">${orders.length} pago${orders.length !== 1 ? 's' : ''} · ${fmtMoney(totalPaid)} recibido</div>
+          <div class="csub">${orders.length} pago${orders.length !== 1 ? 's' : ''} Â· ${fmtMoney(totalPaid)} recibido</div>
         </div>
         ${badge}
         <i class="ti ti-chevron-${c.open ? 'up' : 'down'}" style="font-size:15px;color:#aac4d4;margin-left:6px;"></i>
@@ -563,7 +588,7 @@ function render() {
         ${c.error ? `<div class="err-box"><i class="ti ti-alert-circle"></i> ${c.error}</div>` : ''}
         <div class="metrics">
           <div class="metric editable" onclick="startEditInvestment(${c.id})">
-            <div class="mlabel"><i class="ti ti-edit"></i> Inversión total</div>
+            <div class="mlabel"><i class="ti ti-edit"></i> InversiÃ³n total</div>
             ${invField}
           </div>
           <div class="metric">
@@ -589,7 +614,7 @@ function render() {
   }).join('');
 }
 
-// ── Admin ──────────────────────────────────────────
+// â”€â”€ Admin â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function generateInvite() {
   const data = await api('POST', '/api/invite', {});
   if (data.error) { alert(data.error); return; }
@@ -603,7 +628,7 @@ function copyCode() {
   navigator.clipboard.writeText(lastCode).then(() => {
     const btn = document.querySelector('.btn-copy-code');
     const orig = btn.innerHTML;
-    btn.innerHTML = '<i class="ti ti-check" style="font-size:13px;"></i> ¡Copiado!';
+    btn.innerHTML = '<i class="ti ti-check" style="font-size:13px;"></i> Â¡Copiado!';
     setTimeout(() => { btn.innerHTML = orig; }, 2000);
   });
 }
@@ -620,7 +645,7 @@ async function loadAdmin() {
     </tr>`).join('')}</tbody></table>`;
 
   document.getElementById('invites-table').innerHTML = `<table class="tbl">
-    <thead><tr><th>Código</th><th>Estado</th><th>Creado</th></tr></thead>
+    <thead><tr><th>CÃ³digo</th><th>Estado</th><th>Creado</th></tr></thead>
     <tbody>${(invites || []).map(i => `<tr>
       <td style="font-family:monospace;font-weight:600;color:${i.used ? 'var(--muted)' : 'var(--orange)'};">${i.code}</td>
       <td>${i.used ? '<span class="pill pill-used">Usado</span>' : '<span class="pill pill-avail">Disponible</span>'}</td>
