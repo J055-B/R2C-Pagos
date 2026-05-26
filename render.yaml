@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: fireberry-pagos
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: FIREBERRY_TOKEN
+        value: 4863e71d-5503-47b3-8745-5217fe928861
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
