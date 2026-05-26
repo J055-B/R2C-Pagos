@@ -304,7 +304,7 @@ function getField(data, ...keys) {
   return '';
 }
 function getClientName(data) {
-  return getField(data, 'fullname', 'accountname', 'name', 'firstname', 'contactname', 'leadname') || 'Sin nombre';
+  return getField(data, 'accountname', 'fullname', 'name', 'firstname', 'contactname', 'leadname') || 'Sin nombre';
 }
 
 async function api(method, path, body) {
@@ -423,11 +423,11 @@ async function loadClientData(c) {
   try {
     // Fetch main record
     const rec = await api('GET', `/api/fireberry/record/${c.object_type}/${c.record_id}`);
-    c.fbData = rec.Data || rec.data || rec;
+    c.fbData = (rec.data && rec.data.Record) ? rec.data.Record : (rec.Data && rec.Data.Record) ? rec.Data.Record : rec.Data || rec.data || rec;
 
     // Fetch orders
     const ordersRes = await api('GET', `/api/fireberry/orders/${c.record_id}`);
-    const rawOrders = ordersRes.Data || ordersRes.data || ordersRes.records || [];
+    const rawOrders = ordersRes.data?.Data || ordersRes.Data || ordersRes.data || ordersRes.records || [];
     c.orders = Array.isArray(rawOrders) ? rawOrders : [];
     c.error = null;
   } catch (e) { c.error = e.message; }
@@ -494,17 +494,17 @@ function startEditInvestment(dbId) {
 
 // ── Render ─────────────────────────────────────────
 function getOrderPayMethod(order) {
-  return getField(order, 'cf_formapago', 'paymentmethod', 'paymentmethodcode', 'cf_metodopago', 'paymenttype') || '';
+  return getField(order, 'pcfsystemfield1177name', 'cf_formapago', 'paymentmethod', 'paymentmethodcode') || '';
 }
 function getOrderAmount(order) {
-  const raw = getField(order, 'totalamount', 'amount', 'cf_monto', 'price', 'totallineitemamount');
+  const raw = getField(order, 'totalamount', 'amount', 'productstotal', 'cf_monto');
   return parseFloat(raw) || 0;
 }
 function getOrderNumber(order) {
-  return getField(order, 'ordernumber', 'name', 'orderid', 'cf_numerodeorden', 'invoicenumber') || '';
+  return getField(order, 'crmordernumber', 'ordernumber', 'idnumber', 'invoicenumber') || '';
 }
 function getOrderDate(order) {
-  return getField(order, 'createdon', 'orderdate', 'cf_fechapago', 'modifiedon', 'actualstart');
+  return getField(order, 'createdon', 'orderdate', 'modifiedon');
 }
 
 function render() {
@@ -526,9 +526,6 @@ function render() {
     const d = c.fbData || {};
     const name = getClientName(d);
     const orders = c.orders || [];
-    const totalPaid = orders.reduce((sum, o) => sum + getOrderAmount(o), 0);
-    const totalInv = parseFloat(c.total_investment) || 0;
-    const pending = Math.max(0, totalInv - totalPaid);
     const pendingColor = pending > 0 ? 'red' : 'green';
 
     let badge = '<span class="badge b-ok">Al corriente</span>';

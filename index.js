@@ -189,8 +189,8 @@ app.get('/api/fireberry/record/:objectType/:id', auth, async (req, res) => {
 app.get('/api/fireberry/orders/:recordId', auth, async (req, res) => {
   try {
     const body = {
-      objecttype: parseInt(process.env.ORDERS_OBJECT_TYPE || '2'),
-      query: `(accountid = '${req.params.recordId}') OR (regardingobjectid = '${req.params.recordId}')`,
+      objecttype: parseInt(process.env.ORDERS_OBJECT_TYPE || '13'),
+      query: `(accountid = '${req.params.recordId}')`,
       pageSize: 100, page: 1, sortby: 'createdon', sorttype: 'ASC'
     };
     const response = await fetch(`${FIREBERRY_API}/query`, {
