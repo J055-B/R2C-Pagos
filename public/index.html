@@ -754,7 +754,8 @@ async function generateTicket(clientId) {
 
   const W = 900;
   const ROW_H = 36;
-  const H = 320 + orders.length * ROW_H + 60;
+  const HEADER_H = 140;
+  const H = HEADER_H + 200 + orders.length * ROW_H + 60;
 
   const canvas = document.createElement('canvas');
   canvas.width = W;
@@ -767,20 +768,29 @@ async function generateTicket(clientId) {
 
   // Header bar
   ctx.fillStyle = '#0a1628';
-  ctx.fillRect(0, 0, W, 90);
+  ctx.fillRect(0, 0, W, HEADER_H);
 
-  // Logo in header
+  // Logo — load with correct aspect ratio
   const logoImg = new Image();
-  await new Promise(r => { logoImg.onload = r; logoImg.src = LOGO_FULL; });
-  ctx.drawImage(logoImg, 24, 8, 180, 74);
+  await new Promise((resolve) => {
+    logoImg.onload = resolve;
+    logoImg.onerror = resolve;
+    logoImg.src = LOGO_FULL;
+  });
+  const nw = logoImg.naturalWidth || 300;
+  const nh = logoImg.naturalHeight || 314;
+  const ratio = nw / nh;
+  const logoH = 110;
+  const logoW = logoH * ratio;
+  ctx.drawImage(logoImg, 20, (HEADER_H - logoH) / 2, logoW, logoH);
 
   // Header text
   ctx.fillStyle = 'white';
-  ctx.font = 'bold 22px -apple-system, Arial, sans-serif';
-  ctx.fillText('Estado de Cuenta', W - 280, 40);
-  ctx.font = '13px -apple-system, Arial, sans-serif';
+  ctx.font = 'bold 24px Arial, sans-serif';
+  ctx.fillText('Estado de Cuenta', W - 290, HEADER_H / 2 - 6);
+  ctx.font = '13px Arial, sans-serif';
   ctx.fillStyle = '#7bafc8';
-  ctx.fillText('Fecha de emisión: ' + new Date().toLocaleDateString('es-MX'), W - 280, 62);
+  ctx.fillText('Fecha de emisión: ' + new Date().toLocaleDateString('es-MX'), W - 290, HEADER_H / 2 + 18);
 
   // Client info box
   const clientBoxY = HEADER_H + 16;
