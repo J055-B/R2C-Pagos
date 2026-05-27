@@ -189,7 +189,7 @@ app.get('/api/fireberry/record/:objectType/:id', auth, async (req, res) => {
 app.get('/api/fireberry/orders/:recordId', auth, async (req, res) => {
   try {
     const body = {
-      objecttype: parseInt(process.env.ORDERS_OBJECT_TYPE || '13'),
+      objecttype: 13,
       query: `(accountid = '${req.params.recordId}')`,
       pageSize: 100, page: 1, sortby: 'createdon', sorttype: 'ASC'
     };
@@ -198,7 +198,10 @@ app.get('/api/fireberry/orders/:recordId', auth, async (req, res) => {
       headers: { 'tokenid': FIREBERRY_TOKEN, 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
-    res.json(await response.json());
+    const data = await response.json();
+    console.log('ORDERS RESPONSE keys:', Object.keys(data));
+    // Pass through raw response so frontend can parse it
+    res.json(data);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
