@@ -233,7 +233,15 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
       <div class="add-row">
         <input type="text" id="url-in" placeholder="Pega el enlace de Fireberry del cliente..." />
         <button class="btn-ref" onclick="refreshAll()" title="Actualizar todos"><i class="ti ti-refresh" style="font-size:15px;"></i></button>
+        <button class="btn-ref" onclick="toggleManage()" id="btn-manage" title="Gestionar clientes"><i class="ti ti-trash" style="font-size:15px;"></i></button>
         <button class="btn-add" onclick="addClient()"><i class="ti ti-plus"></i> Agregar</button>
+      </div>
+      <div id="manage-bar" style="display:none;background:var(--red-bg);border:0.5px solid #f5b7b1;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:none;align-items:center;justify-content:space-between;">
+        <span id="manage-count" style="font-size:13px;color:var(--red);font-weight:500;">Seleccioná los clientes a eliminar</span>
+        <div style="display:flex;gap:8px;">
+          <button class="bsm" onclick="toggleManage()" style="font-size:12px;">Cancelar</button>
+          <button onclick="deleteSelected()" style="padding:5px 14px;background:var(--red);color:white;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;"><i class="ti ti-trash"></i> Eliminar seleccionados</button>
+        </div>
       </div>
       <div id="list"></div>
     </div>
@@ -270,6 +278,8 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 let token = localStorage.getItem('r2c_token');
 let currentUser = JSON.parse(localStorage.getItem('r2c_user') || 'null');
 let clients = [];
+let manageMode = false;
+let selectedIds = new Set();
 let lastCode = '';
 
 // ── Helpers ────────────────────────────────────────
@@ -502,6 +512,41 @@ async function refreshAll() {
   render();
 }
 
+function toggleManage() {
+  manageMode = !manageMode;
+  selectedIds.clear();
+  const bar = document.getElementById('manage-bar');
+  bar.style.display = manageMode ? 'flex' : 'none';
+  const btn = document.getElementById('btn-manage');
+  btn.style.background = manageMode ? 'var(--red-bg)' : '';
+  btn.style.borderColor = manageMode ? '#f5b7b1' : '';
+  render();
+}
+
+function toggleSelect(dbId) {
+  if (selectedIds.has(dbId)) selectedIds.delete(dbId);
+  else selectedIds.add(dbId);
+  const count = selectedIds.size;
+  document.getElementById('manage-count').textContent = count === 0
+    ? 'Seleccioná los clientes a eliminar'
+    : `${count} cliente${count !== 1 ? 's' : ''} seleccionado${count !== 1 ? 's' : ''}`;
+  render();
+}
+
+async function deleteSelected() {
+  if (selectedIds.size === 0) { alert('Seleccioná al menos un cliente'); return; }
+  if (!confirm(`¿Eliminar ${selectedIds.size} cliente${selectedIds.size !== 1 ? 's' : ''}?`)) return;
+  for (const id of selectedIds) {
+    await api('DELETE', `/api/clients/${id}`);
+  }
+  clients = clients.filter(c => !selectedIds.has(c.id));
+  selectedIds.clear();
+  manageMode = false;
+  document.getElementById('manage-bar').style.display = 'none';
+  document.getElementById('btn-manage').style.background = '';
+  render();
+}
+
 function toggleOpen(recordId) {
   const c = clients.find(x => x.record_id === recordId);
   if (c) { c.open = !c.open; render(); }
@@ -601,8 +646,9 @@ function render() {
       </div>`;
     }
 
-    return `<div class="ccard">
-      <div class="ccard-head" onclick="toggleOpen('${c.record_id}')">
+    return `<div class="ccard" style="${manageMode && isSelected ? 'border-color:var(--red);' : ''}">
+      <div class="ccard-head" onclick="${manageMode ? `toggleSelect(${c.id})` : `toggleOpen('${c.record_id}')`}" style="${manageMode && isSelected ? 'background:var(--red-bg);' : ''}">
+        ${manageMode ? `<input type="checkbox" ${isSelected ? 'checked' : ''} style="margin-right:4px;accent-color:var(--red);width:16px;height:16px;flex-shrink:0;" onclick="event.stopPropagation();toggleSelect(${c.id})" />` : ''}
         <div class="cav">${initials(name)}</div>
         <div class="cmeta">
           <div class="cname">${name}</div>

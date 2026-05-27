@@ -254,6 +254,12 @@ app.get('/api/debug/orders/:recordId', async (req, res) => {
 });
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
+// Temp: clear all clients
+app.get('/api/reset-clients', async (req, res) => {
+  await pool.query('DELETE FROM clients');
+  res.json({ ok: true, message: 'Todos los clientes eliminados' });
+});
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 initDB().then(() => {
