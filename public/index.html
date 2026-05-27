@@ -23,10 +23,8 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 #login-screen, #register-screen { align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; background: var(--pearl); }
 .auth-card { background: white; border: 0.5px solid var(--border); border-radius: 14px; padding: 2rem; width: 100%; max-width: 360px; }
 .auth-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 0.5px solid var(--border); }
-.logo-box { width: 42px; height: 42px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.logo-box img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
-.logo-box-fallback { width: 42px; height: 42px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.logo-box-fallback i { font-size: 20px; color: white; }
+.logo-box { width: 42px; height: 42px; background: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+.logo-box img { width: 42px; height: 42px; object-fit: cover; border-radius: 10px; }
 .brand-name { font-size: 15px; font-weight: 600; color: var(--navy); }
 .brand-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
 .field { margin-bottom: 13px; }
@@ -44,10 +42,8 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 #app-screen { flex-direction: column; min-height: 100vh; }
 .topbar { background: var(--navy); border-bottom: 2px solid var(--blue); padding: 0 1.25rem; height: 52px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
 .topbar-left { display: flex; align-items: center; gap: 10px; }
-.topbar-logo { width: 30px; height: 30px; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
-.topbar-logo img { width: 24px; height: 24px; object-fit: contain; }
-.topbar-logo-fb { width: 30px; height: 30px; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-.topbar-logo-fb i { font-size: 16px; color: var(--navy); }
+.topbar-logo { width: 30px; height: 30px; background: white; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.topbar-logo img { width: 30px; height: 30px; object-fit: cover; }
 .brand { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-main { font-size: 13px; font-weight: 600; color: white; }
 .brand-sm { font-size: 10px; color: #7bafc8; }
@@ -65,23 +61,28 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 .page-title { font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
 .page-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.25rem; }
 
-/* ADD ROW */
-.add-row { display: flex; gap: 7px; margin-bottom: 1.25rem; }
+.add-row { display: flex; gap: 7px; margin-bottom: 1rem; }
 .add-row input { flex: 1; padding: 9px 12px; border: 0.5px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: white; color: var(--navy); }
 .add-row input:focus { border-color: var(--blue); }
 .btn-add { padding: 9px 16px; background: var(--blue); color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
 .btn-add:hover { opacity: 0.88; }
-.btn-ref { padding: 9px 11px; background: white; border: 0.5px solid var(--border); border-radius: 6px; cursor: pointer; color: var(--muted); display: flex; align-items: center; }
-.btn-ref:hover { background: var(--sky); }
+.btn-icon { padding: 9px 11px; background: white; border: 0.5px solid var(--border); border-radius: 6px; cursor: pointer; color: var(--muted); display: flex; align-items: center; justify-content: center; }
+.btn-icon:hover { background: var(--sky); }
+.btn-icon.active { background: var(--red-bg); border-color: #f5b7b1; color: var(--red); }
 
-/* EMPTY */
+.manage-bar { background: var(--red-bg); border: 0.5px solid #f5b7b1; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.manage-bar span { font-size: 13px; color: var(--red); font-weight: 500; }
+.btn-delete-sel { padding: 6px 14px; background: var(--red); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.btn-cancel-manage { padding: 6px 12px; background: white; border: 0.5px solid var(--border); border-radius: 6px; font-size: 12px; cursor: pointer; color: var(--navy); }
+
 .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 14px; border: 1.5px dashed var(--border); border-radius: 10px; background: white; }
 .empty i { font-size: 30px; display: block; margin-bottom: 10px; opacity: 0.3; color: var(--blue); }
 
-/* CLIENT CARD */
-.ccard { background: white; border: 0.5px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
-.ccard-head { display: flex; align-items: center; gap: 11px; padding: 13px 15px; cursor: pointer; }
+.ccard { background: white; border: 0.5px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.15s; }
+.ccard.selected { border-color: var(--red); }
+.ccard-head { display: flex; align-items: center; gap: 11px; padding: 13px 15px; cursor: pointer; transition: background 0.1s; }
 .ccard-head:hover { background: var(--sky); }
+.ccard-head.manage-hover:hover { background: var(--red-bg); }
 .cav { width: 36px; height: 36px; border-radius: 50%; background: var(--sky); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--blue); flex-shrink: 0; }
 .cmeta { flex: 1; min-width: 0; }
 .cname { font-size: 14px; font-weight: 600; color: var(--navy); }
@@ -92,46 +93,40 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 .b-err { background: var(--red-bg); color: var(--red); }
 .b-blue { background: var(--sky); color: var(--blue); }
 
-/* CARD BODY */
 .ccard-body { border-top: 0.5px solid var(--border); padding: 15px; display: none; }
 .ccard-body.open { display: block; }
 
-/* METRICS */
 .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 15px; }
 .metric { background: var(--sky); border-radius: 8px; padding: 11px 13px; }
-.metric.editable { cursor: pointer; position: relative; }
+.metric.editable { cursor: pointer; }
 .metric.editable:hover { background: #d4eefa; }
 .mlabel { font-size: 10px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px; }
-.mlabel i { font-size: 11px; color: var(--blue); }
 .mval { font-size: 19px; font-weight: 600; color: var(--navy); }
 .mval.green { color: var(--green); }
 .mval.red { color: var(--red); }
 .invest-input { font-size: 17px; font-weight: 600; color: var(--navy); border: none; background: transparent; outline: none; width: 100%; padding: 0; font-family: inherit; }
 .invest-hint { font-size: 10px; color: var(--blue); margin-top: 3px; }
 
-/* PAYMENTS TABLE */
 .stitle { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 9px; display: flex; align-items: center; gap: 6px; }
 .ptable-wrap { border: 0.5px solid var(--border); border-radius: 8px; overflow: hidden; }
 .ptable { width: 100%; border-collapse: collapse; font-size: 13px; }
-.ptable th { text-align: left; padding: 7px 10px; color: var(--muted); font-weight: 500; font-size: 11px; background: var(--sky); border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 0.03em; }
+.ptable th { text-align: left; padding: 7px 10px; color: var(--muted); font-weight: 500; font-size: 11px; background: var(--sky); border-bottom: 0.5px solid var(--border); text-transform: uppercase; }
 .ptable td { padding: 9px 10px; border-bottom: 0.5px solid var(--border); color: var(--navy); }
 .ptable tr:last-child td { border-bottom: none; }
 .tar { text-align: right; font-variant-numeric: tabular-nums; }
 .order-num { font-family: monospace; font-size: 11px; color: var(--muted); }
-.pay-method { font-size: 11px; padding: 2px 7px; background: var(--sky); color: var(--blue); border-radius: 10px; font-weight: 500; display: inline-block; }
+.pay-method { font-size: 11px; padding: 2px 7px; background: var(--sky); color: var(--blue); border-radius: 10px; font-weight: 500; }
 .no-orders { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 13px; }
 
-/* CARD FOOTER */
 .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 13px; }
 .ts { font-size: 11px; color: var(--muted); }
 .card-actions { display: flex; gap: 6px; }
 .bsm { font-size: 12px; padding: 5px 11px; background: white; border: 0.5px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: var(--navy); }
 .bsm:hover { background: var(--sky); }
 .bsm.danger { color: var(--red); }
-.bsm.danger:hover { background: var(--red-bg); border-color: #f5b7b1; }
+.bsm.danger:hover { background: var(--red-bg); }
 .err-box { font-size: 12px; color: var(--red); background: var(--red-bg); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; }
 
-/* ADMIN */
 .admin-box { background: white; border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
 .admin-section-h { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
 .admin-section-h i { color: var(--blue); }
@@ -140,7 +135,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 .btn-generate { padding: 8px 16px; background: var(--blue); color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; margin-top: 12px; }
 .btn-copy-code { padding: 7px 14px; background: var(--orange-bg); border: 0.5px solid var(--orange-border); color: var(--orange); border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; margin-top: 8px; }
 .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-.tbl th { text-align: left; padding: 8px 10px; color: var(--muted); font-weight: 500; font-size: 11px; background: var(--sky); border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 0.03em; }
+.tbl th { text-align: left; padding: 8px 10px; color: var(--muted); font-weight: 500; font-size: 11px; background: var(--sky); border-bottom: 0.5px solid var(--border); text-transform: uppercase; }
 .tbl td { padding: 9px 10px; border-bottom: 0.5px solid var(--border); color: var(--navy); }
 .tbl tr:last-child td { border-bottom: none; }
 .pill { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
@@ -165,9 +160,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 <div id="login-screen" class="screen active">
   <div class="auth-card">
     <div class="auth-logo-row">
-      <div class="logo-box" id="auth-logo-login">
-        <img src="/logo.png" alt="R2C" onerror="this.src='';this.parentElement.innerHTML='<i class=\'ti ti-map-pin\' style=\'font-size:20px;color:white;\'></i>'" />
-      </div>
+      <div class="logo-box"><img src="/logo.png" alt="R2C" /></div>
       <div>
         <div class="brand-name">Relocation2Canada</div>
         <div class="brand-sub">Seguimiento de pagos</div>
@@ -177,7 +170,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
     <div class="field"><label>Contraseña</label><input type="password" id="l-pass" placeholder="••••••••" /></div>
     <button class="btn-primary" id="btn-login" onclick="login()">Entrar</button>
     <div class="auth-err" id="login-err"></div>
-    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;">El primer ingreso puede tardar ~30 seg mientras el servidor despierta</div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;">El primer ingreso puede tardar ~30 seg</div>
     <div class="auth-link">¿Primera vez? <a onclick="showScreen('register-screen')">Regístrate con código de invitación</a></div>
   </div>
 </div>
@@ -189,7 +182,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
       <div class="logo-box"><img src="/logo.png" alt="R2C" /></div>
       <div>
         <div class="brand-name">Crear cuenta</div>
-        <div class="brand-sub">Necesitas un código de invitación</div>
+        <div class="brand-sub">Necesitás un código de invitación</div>
       </div>
     </div>
     <div class="field"><label>Nombre completo</label><input type="text" id="r-name" placeholder="Tu nombre completo" /></div>
@@ -206,14 +199,14 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 <div id="app-screen" class="screen">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="topbar-logo" id="topbar-logo"><img src="/logo.png" alt="R2C" /></div>
+      <div class="topbar-logo"><img src="/logo.png" alt="R2C" /></div>
       <div class="brand">
         <span class="brand-main">Relocation2Canada</span>
         <span class="brand-sm">Seguimiento de pagos</span>
       </div>
     </div>
     <div class="topbar-right">
-      <div class="tab-group" id="tab-group">
+      <div class="tab-group">
         <button class="tab-btn on" onclick="switchTab('clients', this)">Mis clientes</button>
         <button class="tab-btn" onclick="switchTab('admin', this)" id="admin-tab-btn" style="display:none;">Admin</button>
       </div>
@@ -226,31 +219,28 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
   </div>
 
   <div class="main">
-    <!-- CLIENTS -->
     <div id="tab-clients">
       <div class="page-title">Mis clientes</div>
       <div class="page-sub" id="sub-label">Cargando...</div>
       <div class="add-row">
         <input type="text" id="url-in" placeholder="Pega el enlace de Fireberry del cliente..." />
-        <button class="btn-ref" onclick="refreshAll()" title="Actualizar todos"><i class="ti ti-refresh" style="font-size:15px;"></i></button>
-        <button class="btn-ref" onclick="toggleManage()" id="btn-manage" title="Gestionar clientes"><i class="ti ti-trash" style="font-size:15px;"></i></button>
+        <button class="btn-icon" onclick="refreshAll()" title="Actualizar todos"><i class="ti ti-refresh" style="font-size:15px;"></i></button>
+        <button class="btn-icon" onclick="toggleManage()" id="btn-manage" title="Gestionar clientes"><i class="ti ti-trash" style="font-size:15px;"></i></button>
         <button class="btn-add" onclick="addClient()"><i class="ti ti-plus"></i> Agregar</button>
       </div>
-      <div id="manage-bar" style="display:none;background:var(--red-bg);border:0.5px solid #f5b7b1;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:none;align-items:center;justify-content:space-between;">
-        <span id="manage-count" style="font-size:13px;color:var(--red);font-weight:500;">Seleccioná los clientes a eliminar</span>
+      <div id="manage-bar" style="display:none;" class="manage-bar">
+        <span id="manage-count">Seleccioná los clientes a eliminar</span>
         <div style="display:flex;gap:8px;">
-          <button class="bsm" onclick="toggleManage()" style="font-size:12px;">Cancelar</button>
-          <button onclick="deleteSelected()" style="padding:5px 14px;background:var(--red);color:white;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;"><i class="ti ti-trash"></i> Eliminar seleccionados</button>
+          <button class="btn-cancel-manage" onclick="toggleManage()">Cancelar</button>
+          <button class="btn-delete-sel" onclick="deleteSelected()"><i class="ti ti-trash"></i> Eliminar seleccionados</button>
         </div>
       </div>
       <div id="list"></div>
     </div>
 
-    <!-- ADMIN -->
     <div id="tab-admin" style="display:none;">
       <div class="page-title">Administración</div>
       <div class="page-sub">Gestiona el acceso del equipo</div>
-
       <div class="admin-box">
         <div class="admin-section-h"><i class="ti ti-ticket"></i> Generar código de invitación</div>
         <div class="code-note">Genera un código y mándalo al agente por WhatsApp. Solo puede usarse una vez.</div>
@@ -260,12 +250,10 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
         </div>
         <button class="btn-generate" onclick="generateInvite()"><i class="ti ti-plus"></i> Generar nuevo código</button>
       </div>
-
       <div class="admin-box">
         <div class="admin-section-h"><i class="ti ti-users"></i> Agentes registrados</div>
         <div id="agents-table"></div>
       </div>
-
       <div class="admin-box">
         <div class="admin-section-h"><i class="ti ti-ticket"></i> Historial de códigos</div>
         <div id="invites-table"></div>
@@ -275,6 +263,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 </div>
 
 <script>
+// ── State ──────────────────────────────────────────────────────
 let token = localStorage.getItem('r2c_token');
 let currentUser = JSON.parse(localStorage.getItem('r2c_user') || 'null');
 let clients = [];
@@ -282,41 +271,43 @@ let manageMode = false;
 let selectedIds = new Set();
 let lastCode = '';
 
-// ── Helpers ────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
+
 function initials(name) {
   if (!name) return '?';
   return name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
 }
+
 function fmtMoney(n) {
-  if (n === undefined || n === null || n === '') return '—';
   const num = parseFloat(n);
-  if (isNaN(num)) return '—';
+  if (isNaN(num)) return '$0.00';
   return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+
 function fmtDate(d) {
   if (!d) return '—';
-  try {
-    return new Date(d).toLocaleDateString('es-MX', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  } catch { return d; }
+  try { return new Date(d).toLocaleDateString('es-MX', { year: 'numeric', month: '2-digit', day: '2-digit' }); }
+  catch { return d; }
 }
+
 function parseUrl(url) {
-  // handles /record/1/uuid and /record/1/uuid?q=...
   const m = url.match(/\/record\/(\d+)\/([a-f0-9-]{36})/i);
   return m ? { objectType: m[1], recordId: m[2] } : null;
 }
+
 function getField(data, ...keys) {
   if (!data) return '';
-  for (const k of keys) if (data[k] !== undefined && data[k] !== null && data[k] !== '') return data[k];
+  for (const k of keys) {
+    if (data[k] !== undefined && data[k] !== null && data[k] !== '') return data[k];
+  }
   return '';
 }
-function getClientName(data) {
-  return getField(data, 'accountname', 'fullname', 'name', 'firstname', 'contactname', 'leadname') || 'Sin nombre';
-}
 
+// ── API ────────────────────────────────────────────────────────
 async function api(method, path, body) {
   const res = await fetch(path, {
     method,
@@ -326,7 +317,7 @@ async function api(method, path, body) {
   return res.json();
 }
 
-// ── Auth ───────────────────────────────────────────
+// ── Auth ───────────────────────────────────────────────────────
 async function login() {
   const username = document.getElementById('l-user').value.trim();
   const password = document.getElementById('l-pass').value;
@@ -334,29 +325,26 @@ async function login() {
   const btn = document.getElementById('btn-login');
   if (!username || !password) { err.textContent = 'Ingresa usuario y contraseña'; return; }
   btn.disabled = true; btn.textContent = 'Entrando...'; err.textContent = '';
-  let data;
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), 30000);
     const res = await fetch('/api/login', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-      signal: controller.signal
+      body: JSON.stringify({ username, password }), signal: controller.signal
     });
     clearTimeout(timeout);
-    data = await res.json();
+    const data = await res.json();
+    btn.disabled = false; btn.textContent = 'Entrar';
+    if (data.error) { err.textContent = data.error; return; }
+    token = data.token;
+    currentUser = { name: data.name, is_admin: data.is_admin };
+    localStorage.setItem('r2c_token', token);
+    localStorage.setItem('r2c_user', JSON.stringify(currentUser));
+    showApp();
   } catch(e) {
     btn.disabled = false; btn.textContent = 'Entrar';
-    err.textContent = e.name === 'AbortError' ? 'El servidor tardó mucho — intentá de nuevo en 30 segundos' : 'Error de conexión: ' + e.message;
-    return;
+    err.textContent = e.name === 'AbortError' ? 'Tiempo de espera — intentá de nuevo' : 'Error: ' + e.message;
   }
-  btn.disabled = false; btn.textContent = 'Entrar';
-  if (data.error) { err.textContent = data.error; return; }
-  token = data.token;
-  currentUser = { name: data.name, is_admin: data.is_admin };
-  localStorage.setItem('r2c_token', token);
-  localStorage.setItem('r2c_user', JSON.stringify(currentUser));
-  showApp();
 }
 
 async function register() {
@@ -366,36 +354,31 @@ async function register() {
   const invite_code = document.getElementById('r-code').value.trim().toUpperCase();
   const err = document.getElementById('reg-err');
   const btn = document.getElementById('btn-reg');
-  if (!name || !username || !password || !invite_code) { err.textContent = 'Completa todos los campos'; return; }
-  if (password.length < 6) { err.textContent = 'La contraseña debe tener al menos 6 caracteres'; return; }
+  if (!name || !username || !password || !invite_code) { err.textContent = 'Completá todos los campos'; return; }
+  if (password.length < 6) { err.textContent = 'Mínimo 6 caracteres'; return; }
   btn.disabled = true; btn.textContent = 'Creando cuenta...'; err.textContent = '';
-  let data;
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
     const res = await fetch('/api/register', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, name, invite_code }),
-      signal: controller.signal
+      body: JSON.stringify({ username, password, name, invite_code })
     });
-    clearTimeout(timeout);
-    data = await res.json();
+    const data = await res.json();
+    btn.disabled = false; btn.textContent = 'Crear cuenta';
+    if (data.error) { err.textContent = data.error; return; }
+    token = data.token;
+    currentUser = { name: data.name, is_admin: data.is_admin };
+    localStorage.setItem('r2c_token', token);
+    localStorage.setItem('r2c_user', JSON.stringify(currentUser));
+    showApp();
   } catch(e) {
     btn.disabled = false; btn.textContent = 'Crear cuenta';
-    err.textContent = e.name === 'AbortError' ? 'El servidor tardó mucho — intentá de nuevo' : 'Error: ' + e.message;
-    return;
+    err.textContent = 'Error: ' + e.message;
   }
-  btn.disabled = false; btn.textContent = 'Crear cuenta';
-  if (data.error) { err.textContent = data.error; return; }
-  token = data.token;
-  currentUser = { name: data.name, is_admin: data.is_admin };
-  localStorage.setItem('r2c_token', token);
-  localStorage.setItem('r2c_user', JSON.stringify(currentUser));
-  showApp();
 }
 
 function logout() {
-  localStorage.removeItem('r2c_token'); localStorage.removeItem('r2c_user');
+  localStorage.removeItem('r2c_token');
+  localStorage.removeItem('r2c_user');
   token = null; currentUser = null; clients = [];
   showScreen('login-screen');
 }
@@ -403,7 +386,7 @@ function logout() {
 document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 document.getElementById('r-code').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase(); });
 
-// ── App ────────────────────────────────────────────
+// ── App init ───────────────────────────────────────────────────
 async function showApp() {
   showScreen('app-screen');
   document.getElementById('agent-name').textContent = currentUser.name;
@@ -420,68 +403,59 @@ function switchTab(tab, btn) {
   if (tab === 'admin') loadAdmin();
 }
 
-// ── Clients ────────────────────────────────────────
+// ── Load clients ───────────────────────────────────────────────
 async function loadClients() {
   const data = await api('GET', '/api/clients');
   if (data.error) { logout(); return; }
-  clients = data.map(c => ({ ...c, fbData: null, orders: [], loading: true, open: false, error: null, editingInvestment: false }));
+  clients = data.map(c => ({
+    ...c,
+    fbData: null,
+    orders: [],
+    loading: true,
+    open: false,
+    error: null,
+    editingInvestment: false
+  }));
   render();
-  clients.forEach((c, i) => {
-    setTimeout(() => loadClientData(c).then(() => render()), i * 600);
-  });
-}
-
-async function fetchWithTimeout(url, options = {}, ms = 10000) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), ms);
-  try {
-    const res = await fetch(url, { ...options, signal: controller.signal });
-    clearTimeout(timer);
-    return res.json();
-  } catch(e) {
-    clearTimeout(timer);
-    throw e;
+  // Load each client's Fireberry data sequentially with small delay
+  for (let i = 0; i < clients.length; i++) {
+    setTimeout(() => loadClientData(clients[i]), i * 500);
   }
 }
 
-async function apiTimeout(method, path, body, ms = 10000) {
-  return fetchWithTimeout(path, {
-    method,
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-    body: body ? JSON.stringify(body) : undefined
-  }, ms);
-}
-
+// ── Load single client data from Fireberry ─────────────────────
 async function loadClientData(c) {
+  // 1. Fetch main record
   try {
-    // Fetch main record with 10s timeout
-    const rec = await apiTimeout('GET', `/api/fireberry/record/${c.object_type}/${c.record_id}`);
-    c.fbData = rec?.data?.Record || rec?.Data?.Record || rec?.data || rec?.Data || rec || {};
+    const rec = await api('GET', `/api/fireberry/record/${c.object_type}/${c.record_id}`);
+    // Fireberry response: { success: true, data: { Record: {...} }, message: "" }
+    c.fbData = rec?.data?.Record || rec?.Data?.Record || null;
+    if (!c.fbData) c.error = 'No se pudo leer el registro';
   } catch(e) {
-    c.fbData = {};
-    c.error = 'Error cargando cliente: ' + (e.name === 'AbortError' ? 'Timeout' : e.message);
+    c.fbData = null;
+    c.error = 'Error: ' + e.message;
   }
 
+  // 2. Fetch orders
   try {
-    // Fetch orders with 10s timeout
-    const ordersRes = await apiTimeout('GET', `/api/fireberry/orders/${c.record_id}`);
-    // Fireberry returns: {success:true, data:{Data:[...]}} or {orders:[...]}
-    const o = ordersRes;
-    c.orders = o.orders || o.data?.Data || o.data?.data || o.Data || o.data || o.records || [];
-    if (!Array.isArray(c.orders)) c.orders = [];
+    const ordersRes = await api('GET', `/api/fireberry/orders/${c.record_id}`);
+    // Server returns: { orders: [...] }
+    c.orders = Array.isArray(ordersRes?.orders) ? ordersRes.orders : [];
   } catch(e) {
     c.orders = [];
   }
 
   c.loading = false;
   c.lastUpdated = new Date().toLocaleTimeString('es-MX');
+  render();
 }
 
+// ── Client actions ─────────────────────────────────────────────
 async function addClient() {
   const url = document.getElementById('url-in').value.trim();
   if (!url) return;
   const parsed = parseUrl(url);
-  if (!parsed) { alert('URL no reconocida.\nFormato esperado: https://app.fireberry.com/app/record/1/...'); return; }
+  if (!parsed) { alert('URL no reconocida.\nFormato: https://app.fireberry.com/app/record/1/...'); return; }
   const res = await api('POST', '/api/clients', { url, object_type: parsed.objectType, record_id: parsed.recordId });
   if (res.error) { alert(res.error); return; }
   document.getElementById('url-in').value = '';
@@ -489,11 +463,10 @@ async function addClient() {
   clients.unshift(c);
   render();
   await loadClientData(c);
-  render();
 }
 
 async function removeClient(dbId) {
-  if (!confirm('¿Eliminar este cliente de tu lista?')) return;
+  if (!confirm('¿Eliminar este cliente?')) return;
   await api('DELETE', `/api/clients/${dbId}`);
   clients = clients.filter(c => c.id !== dbId);
   render();
@@ -502,51 +475,15 @@ async function removeClient(dbId) {
 async function refreshClient(recordId) {
   const c = clients.find(x => x.record_id === recordId);
   if (!c) return;
-  c.loading = true; render();
-  await loadClientData(c); render();
+  c.loading = true;
+  render();
+  await loadClientData(c);
 }
 
 async function refreshAll() {
-  if (!clients.length) return;
   clients.forEach(c => { c.loading = true; });
   render();
-  await Promise.all(clients.map(c => loadClientData(c)));
-  render();
-}
-
-function toggleManage() {
-  manageMode = !manageMode;
-  selectedIds.clear();
-  const bar = document.getElementById('manage-bar');
-  bar.style.display = manageMode ? 'flex' : 'none';
-  const btn = document.getElementById('btn-manage');
-  btn.style.background = manageMode ? 'var(--red-bg)' : '';
-  btn.style.borderColor = manageMode ? '#f5b7b1' : '';
-  render();
-}
-
-function toggleSelect(dbId) {
-  if (selectedIds.has(dbId)) selectedIds.delete(dbId);
-  else selectedIds.add(dbId);
-  const count = selectedIds.size;
-  document.getElementById('manage-count').textContent = count === 0
-    ? 'Seleccioná los clientes a eliminar'
-    : `${count} cliente${count !== 1 ? 's' : ''} seleccionado${count !== 1 ? 's' : ''}`;
-  render();
-}
-
-async function deleteSelected() {
-  if (selectedIds.size === 0) { alert('Seleccioná al menos un cliente'); return; }
-  if (!confirm(`¿Eliminar ${selectedIds.size} cliente${selectedIds.size !== 1 ? 's' : ''}?`)) return;
-  for (const id of selectedIds) {
-    await api('DELETE', `/api/clients/${id}`);
-  }
-  clients = clients.filter(c => !selectedIds.has(c.id));
-  selectedIds.clear();
-  manageMode = false;
-  document.getElementById('manage-bar').style.display = 'none';
-  document.getElementById('btn-manage').style.background = '';
-  render();
+  for (const c of clients) await loadClientData(c);
 }
 
 function toggleOpen(recordId) {
@@ -555,7 +492,7 @@ function toggleOpen(recordId) {
 }
 
 async function saveInvestment(dbId, value) {
-  const num = parseFloat(value.replace(/[^0-9.]/g, ''));
+  const num = parseFloat(String(value).replace(/[^0-9.]/g, ''));
   if (isNaN(num)) return;
   const res = await api('PATCH', `/api/clients/${dbId}/investment`, { total_investment: num });
   if (!res.error) {
@@ -565,28 +502,54 @@ async function saveInvestment(dbId, value) {
 }
 
 function startEditInvestment(dbId) {
+  if (manageMode) return;
   const c = clients.find(x => x.id === dbId);
-  if (c) { c.editingInvestment = true; render(); setTimeout(() => { const inp = document.getElementById('inv-input-' + dbId); if (inp) inp.focus(); }, 50); }
+  if (c) {
+    c.editingInvestment = true;
+    render();
+    setTimeout(() => { const inp = document.getElementById('inv-' + dbId); if (inp) inp.focus(); }, 50);
+  }
 }
 
-// ── Render ─────────────────────────────────────────
-function getOrderPayMethod(order) {
-  return getField(order, 'pcfsystemfield1177name', 'cf_formapago', 'paymentmethod', 'paymentmethodcode') || '';
-}
-function getOrderAmount(order) {
-  const raw = getField(order, 'totalamount', 'amount', 'productstotal', 'cf_monto');
-  return parseFloat(raw) || 0;
-}
-function getOrderNumber(order) {
-  return getField(order, 'crmordernumber', 'ordernumber', 'idnumber', 'invoicenumber') || '';
-}
-function getOrderDate(order) {
-  return getField(order, 'createdon', 'orderdate', 'modifiedon');
+// ── Manage mode ────────────────────────────────────────────────
+function toggleManage() {
+  manageMode = !manageMode;
+  selectedIds.clear();
+  document.getElementById('manage-bar').style.display = manageMode ? 'flex' : 'none';
+  document.getElementById('btn-manage').classList.toggle('active', manageMode);
+  document.getElementById('manage-count').textContent = 'Seleccioná los clientes a eliminar';
+  render();
 }
 
+function toggleSelect(dbId) {
+  if (selectedIds.has(dbId)) selectedIds.delete(dbId);
+  else selectedIds.add(dbId);
+  const n = selectedIds.size;
+  document.getElementById('manage-count').textContent = n === 0
+    ? 'Seleccioná los clientes a eliminar'
+    : `${n} cliente${n !== 1 ? 's' : ''} seleccionado${n !== 1 ? 's' : ''}`;
+  render();
+}
+
+async function deleteSelected() {
+  if (selectedIds.size === 0) { alert('Seleccioná al menos un cliente'); return; }
+  const n = selectedIds.size;
+  if (!confirm(`¿Eliminar ${n} cliente${n !== 1 ? 's' : ''}?`)) return;
+  for (const id of selectedIds) await api('DELETE', `/api/clients/${id}`);
+  clients = clients.filter(c => !selectedIds.has(c.id));
+  selectedIds.clear();
+  manageMode = false;
+  document.getElementById('manage-bar').style.display = 'none';
+  document.getElementById('btn-manage').classList.remove('active');
+  render();
+}
+
+// ── Render ─────────────────────────────────────────────────────
 function render() {
   const count = clients.length;
-  document.getElementById('sub-label').textContent = count + ' cliente' + (count !== 1 ? 's' : '') + ' registrado' + (count !== 1 ? 's' : '');
+  document.getElementById('sub-label').textContent =
+    count + ' cliente' + (count !== 1 ? 's' : '') + ' registrado' + (count !== 1 ? 's' : '');
+
   const list = document.getElementById('list');
 
   if (!count) {
@@ -594,102 +557,133 @@ function render() {
     return;
   }
 
-  list.innerHTML = clients.map(c => {
-    if (c.loading) return `<div class="ccard"><div class="ccard-head" style="cursor:default;">
-      <div class="cav">…</div>
-      <div class="cmeta"><div class="cname"><span class="spinner"></span>Cargando...</div><div class="csub">${c.url}</div></div>
-    </div></div>`;
+  list.innerHTML = clients.map(c => renderCard(c)).join('');
+}
 
-    const d = c.fbData || {};
-    const name = getClientName(d);
-    const orders = c.orders || [];
-    const pendingColor = pending > 0 ? 'red' : 'green';
+function renderCard(c) {
+  const isSelected = selectedIds.has(c.id);
 
-    let badge = '<span class="badge b-ok">Al corriente</span>';
-    if (totalInv === 0) badge = '<span class="badge b-blue">Sin inversión</span>';
-    else if (pending > totalInv * 0.5) badge = '<span class="badge b-err">Deuda alta</span>';
-    else if (pending > 0) badge = '<span class="badge b-warn">Pendiente</span>';
-
-    const bodyClass = 'ccard-body' + (c.open ? ' open' : '');
-
-    // Investment field
-    const invField = c.editingInvestment
-      ? `<input class="invest-input" id="inv-input-${c.id}" type="text" value="${totalInv.toFixed(2)}"
-           onblur="saveInvestment(${c.id}, this.value)"
-           onkeydown="if(event.key==='Enter') saveInvestment(${c.id}, this.value)" />`
-      : `<div class="mval" onclick="startEditInvestment(${c.id})" style="cursor:pointer;">${fmtMoney(totalInv)}</div>
-         <div class="invest-hint"><i class="ti ti-edit" style="font-size:10px;"></i> Click para editar</div>`;
-
-    // Orders table
-    let ordersHtml = '';
-    if (orders.length === 0) {
-      ordersHtml = '<div class="no-orders"><i class="ti ti-receipt" style="font-size:20px;display:block;margin-bottom:6px;opacity:0.3;"></i>Sin órdenes registradas aún</div>';
-    } else {
-      const rows = orders.map((o, idx) => {
-        const payMethod = getOrderPayMethod(o);
-        const amount = getOrderAmount(o);
-        const orderNum = getOrderNumber(o);
-        const date = fmtDate(getOrderDate(o));
-        return `<tr>
-          <td>${date}</td>
-          <td class="order-num">${orderNum || '—'}</td>
-          <td>Cuota #${idx + 1}</td>
-          <td>${payMethod ? `<span class="pay-method">${payMethod}</span>` : '—'}</td>
-          <td class="tar"><strong>${fmtMoney(amount)}</strong></td>
-        </tr>`;
-      }).join('');
-      ordersHtml = `<div class="ptable-wrap">
-        <table class="ptable">
-          <thead><tr>
-            <th>Fecha</th><th>Nº orden</th><th>Descripción</th><th>Forma de pago</th><th class="tar">Monto</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>`;
-    }
-
-    return `<div class="ccard" style="${manageMode && isSelected ? 'border-color:var(--red);' : ''}">
-      <div class="ccard-head" onclick="${manageMode ? `toggleSelect(${c.id})` : `toggleOpen('${c.record_id}')`}" style="${manageMode && isSelected ? 'background:var(--red-bg);' : ''}">
-        ${manageMode ? `<input type="checkbox" ${isSelected ? 'checked' : ''} style="margin-right:4px;accent-color:var(--red);width:16px;height:16px;flex-shrink:0;" onclick="event.stopPropagation();toggleSelect(${c.id})" />` : ''}
-        <div class="cav">${initials(name)}</div>
+  // ── Loading state ──
+  if (c.loading) {
+    return `<div class="ccard${isSelected ? ' selected' : ''}">
+      <div class="ccard-head" style="cursor:default;">
+        <div class="cav">…</div>
         <div class="cmeta">
-          <div class="cname">${name}</div>
-          <div class="csub">${orders.length} pago${orders.length !== 1 ? 's' : ''} · ${fmtMoney(totalPaid)} recibido</div>
-        </div>
-        ${badge}
-        <i class="ti ti-chevron-${c.open ? 'up' : 'down'}" style="font-size:15px;color:#aac4d4;margin-left:6px;"></i>
-      </div>
-      <div class="${bodyClass}">
-        ${c.error ? `<div class="err-box"><i class="ti ti-alert-circle"></i> ${c.error}</div>` : ''}
-        <div class="metrics">
-          <div class="metric editable" onclick="startEditInvestment(${c.id})">
-            <div class="mlabel"><i class="ti ti-edit"></i> Inversión total</div>
-            ${invField}
-          </div>
-          <div class="metric">
-            <div class="mlabel">Pagos recibidos</div>
-            <div class="mval green">${fmtMoney(totalPaid)}</div>
-          </div>
-          <div class="metric">
-            <div class="mlabel">Saldo pendiente</div>
-            <div class="mval ${pendingColor}">${fmtMoney(pending)}</div>
-          </div>
-        </div>
-        <div class="stitle"><i class="ti ti-receipt" style="font-size:13px;color:var(--blue);"></i> Historial de pagos (${orders.length})</div>
-        ${ordersHtml}
-        <div class="card-footer">
-          <span class="ts">${c.lastUpdated ? 'Actualizado: ' + c.lastUpdated : ''}</span>
-          <div class="card-actions">
-            <button class="bsm danger" onclick="removeClient(${c.id})"><i class="ti ti-trash"></i> Eliminar</button>
-            <button class="bsm" onclick="refreshClient('${c.record_id}')"><i class="ti ti-refresh"></i> Actualizar</button>
-          </div>
+          <div class="cname"><span class="spinner"></span>Cargando datos de Fireberry...</div>
+          <div class="csub">${c.url}</div>
         </div>
       </div>
     </div>`;
-  }).join('');
+  }
+
+  // ── Extract fields from Fireberry data ──
+  const d = c.fbData || {};
+
+  // Client name
+  const name = d.accountname || d.fullname || d.name || 'Sin nombre';
+
+  // Program & advisor
+  const program = d.pcfsystemfield3858name || d.pcfsystemfield1171name || d.pcfsystemfield2728name || '';
+  const advisor = d.pcfsystemfield3719 || d.ownername || '';
+
+  // Financial calculations
+  const orders = Array.isArray(c.orders) ? c.orders : [];
+  const totalInv = parseFloat(c.total_investment) || 0;
+  const totalPaid = orders.reduce((sum, o) => sum + (parseFloat(o.totalamount) || 0), 0);
+  const pending = Math.max(0, totalInv - totalPaid);
+
+  // Badge
+  let badge;
+  if (totalInv === 0) badge = '<span class="badge b-blue">Sin inversión</span>';
+  else if (pending <= 0) badge = '<span class="badge b-ok">Al corriente</span>';
+  else if (pending > totalInv * 0.5) badge = '<span class="badge b-err">Deuda alta</span>';
+  else badge = '<span class="badge b-warn">Pendiente</span>';
+
+  // Investment field (editable)
+  const invField = c.editingInvestment
+    ? `<input class="invest-input" id="inv-${c.id}" type="number" value="${totalInv}"
+         onblur="saveInvestment(${c.id}, this.value)"
+         onkeydown="if(event.key==='Enter')saveInvestment(${c.id},this.value)" />`
+    : `<div class="mval">${fmtMoney(totalInv)}</div>
+       <div class="invest-hint"><i class="ti ti-edit" style="font-size:10px;"></i> Click para editar</div>`;
+
+  // Orders table
+  let ordersHtml;
+  if (orders.length === 0) {
+    ordersHtml = '<div class="no-orders"><i class="ti ti-receipt" style="font-size:20px;display:block;margin-bottom:6px;opacity:0.3;"></i>Sin órdenes registradas aún</div>';
+  } else {
+    const rows = orders.map((o, idx) => {
+      const date = fmtDate(o.createdon);
+      const orderNum = o.crmordernumber || o.idnumber || '—';
+      const payMethod = o.pcfsystemfield1177name || o.paymentmethod || '—';
+      const amount = parseFloat(o.totalamount) || 0;
+      return `<tr>
+        <td>${date}</td>
+        <td class="order-num">#${orderNum}</td>
+        <td>Cuota #${idx + 1}</td>
+        <td>${payMethod !== '—' ? `<span class="pay-method">${payMethod}</span>` : '—'}</td>
+        <td class="tar"><strong>${fmtMoney(amount)}</strong></td>
+      </tr>`;
+    }).join('');
+    ordersHtml = `<div class="ptable-wrap">
+      <table class="ptable">
+        <thead><tr>
+          <th>Fecha</th><th>N° Orden</th><th>Descripción</th><th>Forma de pago</th><th class="tar">Monto</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }
+
+  // Head click behavior
+  const headClick = manageMode
+    ? `onclick="toggleSelect(${c.id})"`
+    : `onclick="toggleOpen('${c.record_id}')"`;
+  const headStyle = manageMode && isSelected ? 'style="background:var(--red-bg);"' : '';
+
+  return `<div class="ccard${isSelected ? ' selected' : ''}">
+    <div class="ccard-head ${manageMode ? 'manage-hover' : ''}" ${headClick} ${headStyle}>
+      ${manageMode ? `<input type="checkbox" ${isSelected ? 'checked' : ''} 
+        style="width:16px;height:16px;flex-shrink:0;accent-color:var(--red);margin-right:2px;"
+        onclick="event.stopPropagation();toggleSelect(${c.id})" />` : ''}
+      <div class="cav">${initials(name)}</div>
+      <div class="cmeta">
+        <div class="cname">${name}</div>
+        <div class="csub">${program ? program + ' · ' : ''}${advisor ? 'Asesor: ' + advisor : ''}</div>
+      </div>
+      ${badge}
+      <i class="ti ti-chevron-${c.open ? 'up' : 'down'}" style="font-size:15px;color:#aac4d4;margin-left:6px;"></i>
+    </div>
+    <div class="ccard-body${c.open ? ' open' : ''}">
+      ${c.error ? `<div class="err-box"><i class="ti ti-alert-circle"></i> ${c.error}</div>` : ''}
+      <div class="metrics">
+        <div class="metric editable" onclick="startEditInvestment(${c.id})">
+          <div class="mlabel"><i class="ti ti-edit"></i> Inversión total</div>
+          ${invField}
+        </div>
+        <div class="metric">
+          <div class="mlabel">Pagos recibidos</div>
+          <div class="mval green">${fmtMoney(totalPaid)}</div>
+        </div>
+        <div class="metric">
+          <div class="mlabel">Saldo pendiente</div>
+          <div class="mval ${pending > 0 ? 'red' : 'green'}">${fmtMoney(pending)}</div>
+        </div>
+      </div>
+      <div class="stitle"><i class="ti ti-receipt" style="font-size:13px;color:var(--blue);"></i> Historial de pagos (${orders.length})</div>
+      ${ordersHtml}
+      <div class="card-footer">
+        <span class="ts">${c.lastUpdated ? 'Actualizado: ' + c.lastUpdated : ''}</span>
+        <div class="card-actions">
+          <button class="bsm danger" onclick="removeClient(${c.id})"><i class="ti ti-trash"></i> Eliminar</button>
+          <button class="bsm" onclick="refreshClient('${c.record_id}')"><i class="ti ti-refresh"></i> Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 
-// ── Admin ──────────────────────────────────────────
+// ── Admin ──────────────────────────────────────────────────────
 async function generateInvite() {
   const data = await api('POST', '/api/invite', {});
   if (data.error) { alert(data.error); return; }
@@ -703,7 +697,7 @@ function copyCode() {
   navigator.clipboard.writeText(lastCode).then(() => {
     const btn = document.querySelector('.btn-copy-code');
     const orig = btn.innerHTML;
-    btn.innerHTML = '<i class="ti ti-check" style="font-size:13px;"></i> ¡Copiado!';
+    btn.innerHTML = '<i class="ti ti-check"></i> ¡Copiado!';
     setTimeout(() => { btn.innerHTML = orig; }, 2000);
   });
 }
@@ -720,7 +714,7 @@ async function loadAdmin() {
     </tr>`).join('')}</tbody></table>`;
 
   document.getElementById('invites-table').innerHTML = `<table class="tbl">
-    <thead><tr><th>Código</th><th>Estado</th><th>Creado</th></tr></thead>
+    <thead><tr><th>Código</th><th>Estado</th><th>Fecha</th></tr></thead>
     <tbody>${(invites || []).map(i => `<tr>
       <td style="font-family:monospace;font-weight:600;color:${i.used ? 'var(--muted)' : 'var(--orange)'};">${i.code}</td>
       <td>${i.used ? '<span class="pill pill-used">Usado</span>' : '<span class="pill pill-avail">Disponible</span>'}</td>
@@ -728,7 +722,7 @@ async function loadAdmin() {
     </tr>`).join('')}</tbody></table>`;
 }
 
-// Auto login
+// ── Auto login ─────────────────────────────────────────────────
 if (token && currentUser) showApp();
 </script>
 </body>
