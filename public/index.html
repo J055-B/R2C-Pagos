@@ -368,12 +368,12 @@ function applyLang() {
   var m = {
     't-login-title': 'login_title', 't-login-sub': 'login_sub',
     't-username-l': 'username', 't-password-l': 'password',
-    'btn-login': 'enter', 't-login-note': 'login_note',
+    't-login-note': 'login_note',
     't-first-time': 'first_time', 't-register-link': 'register_link',
     't-create-title': 'create_title', 't-need-code': 'need_code',
     't-fullname-l': 'fullname', 't-username-r': 'username',
     't-password-r': 'password', 't-invite-l': 'invite_lbl',
-    'btn-reg': 'create_btn', 't-back-login': 'back_login',
+    't-back-login': 'back_login',
     't-tab-clients': 'tab_clients', 'admin-tab-btn': 'tab_admin',
     't-logout': 'logout', 't-page-title': 'page_title',
     't-add': 'add', 't-cancel': 'cancel', 't-delete-sel': 'delete_sel',
@@ -388,6 +388,11 @@ function applyLang() {
   });
   var urlIn = document.getElementById('url-in');
   if (urlIn) urlIn.placeholder = lang === 'es' ? 'Pega el enlace de Fireberry del cliente...' : 'Paste Fireberry client link...';
+  // Only update login/register buttons if not in loading state
+  var loginBtn = document.getElementById('btn-login');
+  if (loginBtn && !loginBtn.disabled) loginBtn.textContent = t('enter');
+  var regBtn = document.getElementById('btn-reg');
+  if (regBtn && !regBtn.disabled) regBtn.textContent = t('create_btn');
   if (clients.length) render();
 }
 
@@ -1026,13 +1031,15 @@ function closeOrdersModal() {
   window._modalClientId = null;
 }
 
+// Make sure modal is hidden on load
+document.getElementById('orders-modal').style.display = 'none';
 applyLang();
 if (token && currentUser) showApp();
 else document.getElementById('lang-btn-auth').style.display = 'flex';
 </script>
 
 <!-- ORDERS MODAL -->
-<div id="orders-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;">
+<div id="orders-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;pointer-events:auto;">
   <div style="background:white;border-radius:14px;padding:24px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;margin:1rem;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
       <div style="font-size:17px;font-weight:600;color:var(--navy);" id="modal-client-name">Cuotas</div>
