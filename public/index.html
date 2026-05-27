@@ -995,7 +995,7 @@ function renderModalOrders(c) {
       var sel = _selectedOrders.has(oid);
       return '<tr style="border-bottom:0.5px solid var(--border);' + (sel ? 'background:var(--red-bg);' : '') + '">' +
         '<td style="padding:8px 10px;"><input type="checkbox" ' + (sel ? 'checked' : '') +
-        ' style="width:15px;height:15px;accent-color:var(--red);" onchange="toggleOrderSelect('' + oid + '', this.checked, ' + c.id + ')" /></td>' +
+        ' style="width:15px;height:15px;accent-color:var(--red);" onchange="toggleOrderSelect(\'' + oid + '\', this.checked, ' + c.id + ')" /></td>' +
         '<td style="padding:8px 10px;color:var(--navy);">' + fmtDate(o.createdon) + '</td>' +
         '<td style="padding:8px 10px;font-family:monospace;font-size:11px;color:var(--muted);">#' + (o.crmordernumber || '—') + '</td>' +
         '<td style="padding:8px 10px;color:var(--navy);">' + t('cuota') + ' #' + (idx + 1) + '</td>' +
