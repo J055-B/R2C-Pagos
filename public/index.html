@@ -150,7 +150,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 
 <div id="login-screen" class="screen active">
   <div class="auth-logo-top">
-    <img src="/logo.png" alt="Relocation2Canada" />
+    <img src="/login-logo.png" alt="Relocation2Canada" style="height:160px;width:auto;object-fit:contain;" />
   </div>
   <div class="auth-card">
     <div class="auth-card-title" id="t-login-title">Iniciar sesion</div>
@@ -166,7 +166,7 @@ body { font-family: -apple-system,'Segoe UI',sans-serif; background: var(--pearl
 
 <div id="register-screen" class="screen">
   <div class="auth-logo-top">
-    <img src="/logo.png" alt="Relocation2Canada" />
+    <img src="/login-logo.png" alt="Relocation2Canada" style="height:160px;width:auto;object-fit:contain;" />
   </div>
   <div class="auth-card">
     <div class="auth-card-title" id="t-create-title">Crear cuenta</div>
@@ -299,7 +299,13 @@ var T = {
     timeout: 'Tiempo de espera, intenta de nuevo',
     conn_err: 'Error de conexion',
     url_err: 'URL no reconocida.',
-    copied: 'Copiado!'
+    copied: 'Copiado!',
+    manage_orders: 'Gestionar cuotas',
+    orders_modal_title: 'Gestionar cuotas',
+    orders_modal_sub: 'Selecciona las cuotas a eliminar de la lista',
+    delete_orders: 'Eliminar seleccionadas',
+    delete_client: 'Eliminar cliente',
+    close: 'Cerrar'
   },
   en: {
     login_title: 'Sign in', login_sub: 'Payment tracking',
@@ -343,7 +349,13 @@ var T = {
     timeout: 'Timeout, please try again',
     conn_err: 'Connection error',
     url_err: 'URL not recognized.',
-    copied: 'Copied!'
+    copied: 'Copied!',
+    manage_orders: 'Manage payments',
+    orders_modal_title: 'Manage payments',
+    orders_modal_sub: 'Select payments to remove from the list',
+    delete_orders: 'Delete selected',
+    delete_client: 'Delete client',
+    close: 'Close'
   }
 };
 
@@ -601,6 +613,16 @@ async function saveInvestment(dbId, value) {
   }
 }
 
+function confirmInvestment(dbId) {
+  var inp = document.getElementById('inv-' + dbId);
+  if (inp) saveInvestment(dbId, inp.value);
+}
+
+function cancelInvestment(dbId) {
+  var c = clients.find(function(x) { return x.id === dbId; });
+  if (c) { c.editingInvestment = false; render(); }
+}
+
 function startEditInvestment(dbId) {
   if (manageMode) return;
   var c = clients.find(function(x) { return x.id === dbId; });
@@ -680,9 +702,12 @@ function renderCard(c) {
   else badge = '<span class="badge b-warn">' + t('pending_lbl') + '</span>';
 
   var invField = c.editingInvestment
-    ? '<input class="invest-input" id="inv-' + c.id + '" type="number" value="' + totalInv + '"' +
-      ' onblur="saveInvestment(' + c.id + ', this.value)"' +
-      ' onkeydown="if(event.key===\'Enter\')saveInvestment(' + c.id + ',this.value)" />'
+    ? '<div style="display:flex;align-items:center;gap:6px;">' +
+      '<input class="invest-input" id="inv-' + c.id + '" type="number" value="' + totalInv + '"' +
+      ' onkeydown="if(event.key===\'Enter\')confirmInvestment(' + c.id + ')" />' +
+      '<button onclick="confirmInvestment(' + c.id + ')" style="padding:3px 8px;background:var(--blue);color:white;border:none;border-radius:5px;cursor:pointer;font-size:12px;white-space:nowrap;"><i class=\"ti ti-check\"></i></button>' +
+      '<button onclick="cancelInvestment(' + c.id + ')" style="padding:3px 8px;background:white;border:0.5px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px;"><i class=\"ti ti-x\"></i></button>' +
+      '</div>'
     : '<div class="mval">' + fmtMoney(totalInv) + '</div>' +
       '<div class="invest-hint"><i class="ti ti-edit" style="font-size:10px;"></i> ' + t('click_edit') + '</div>';
 
@@ -734,7 +759,7 @@ function renderCard(c) {
     '<div class="card-footer">' +
     '<span class="ts">' + (c.lastUpdated ? t('updated') + ': ' + c.lastUpdated : '') + '</span>' +
     '<div class="card-actions">' +
-    '<button class="bsm danger" onclick="removeClient(' + c.id + ')"><i class="ti ti-trash"></i> ' + t('delete') + '</button>' +
+    '<button class="bsm danger" onclick="openOrdersModal(' + c.id + ')"><i class="ti ti-list-check"></i> ' + t('manage_orders') + '</button>' +
     '<button class="bsm" onclick="refreshClient(\'' + c.record_id + '\')"><i class="ti ti-refresh"></i> ' + t('refresh') + '</button>' +
     '<button class="bsm ticket-btn" onclick="generateTicket(' + c.id + ')"><i class="ti ti-download"></i> ' + t('gen_ticket') + '</button>' +
     '</div></div></div></div>';
@@ -921,9 +946,108 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.fill();
 }
 
+
+var _modalClientId = null;
+var _selectedOrders = new Set();
+
+function openOrdersModal(dbId) {
+  var c = clients.find(function(x) { return x.id === dbId; });
+  if (!c) return;
+  window._modalClientId = dbId;
+  _selectedOrders.clear();
+  var d = c.fbData || {};
+  var name = d.accountname || d.fullname || 'Cliente';
+  document.getElementById('modal-client-name').textContent = name + ' — ' + t('orders_modal_title');
+  document.getElementById('modal-sub').textContent = t('orders_modal_sub');
+  document.getElementById('t-del-client').textContent = t('delete_client');
+  document.getElementById('t-close-modal').textContent = t('close');
+  document.getElementById('t-del-orders').textContent = t('delete_orders');
+  renderModalOrders(c);
+  document.getElementById('orders-modal').style.display = 'flex';
+}
+
+function renderModalOrders(c) {
+  var orders = Array.isArray(c.orders)
+    ? c.orders.slice().sort(function(a, b) { return new Date(a.createdon) - new Date(b.createdon); })
+    : [];
+  var list = document.getElementById('modal-orders-list');
+  if (orders.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);">' + t('no_orders') + '</div>';
+    return;
+  }
+  list.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:13px;">' +
+    '<thead><tr style="background:var(--sky);">' +
+    '<th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;border-bottom:0.5px solid var(--border);width:36px;"></th>' +
+    '<th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;border-bottom:0.5px solid var(--border);">' + t('date') + '</th>' +
+    '<th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;border-bottom:0.5px solid var(--border);">' + t('order_n') + '</th>' +
+    '<th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;border-bottom:0.5px solid var(--border);">' + t('desc') + '</th>' +
+    '<th style="padding:8px 10px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;border-bottom:0.5px solid var(--border);">' + t('pay_method') + '</th>' +
+    '<th style="padding:8px 10px;text-align:right;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;border-bottom:0.5px solid var(--border);">' + t('amount') + '</th>' +
+    '</tr></thead><tbody>' +
+    orders.map(function(o, idx) {
+      var oid = o.crmorderid || o.orderid || idx;
+      var sel = _selectedOrders.has(oid);
+      return '<tr style="border-bottom:0.5px solid var(--border);' + (sel ? 'background:var(--red-bg);' : '') + '">' +
+        '<td style="padding:8px 10px;"><input type="checkbox" ' + (sel ? 'checked' : '') +
+        ' style="width:15px;height:15px;accent-color:var(--red);" onchange="toggleOrderSelect('' + oid + '', this.checked, ' + c.id + ')" /></td>' +
+        '<td style="padding:8px 10px;color:var(--navy);">' + fmtDate(o.createdon) + '</td>' +
+        '<td style="padding:8px 10px;font-family:monospace;font-size:11px;color:var(--muted);">#' + (o.crmordernumber || '—') + '</td>' +
+        '<td style="padding:8px 10px;color:var(--navy);">' + t('cuota') + ' #' + (idx + 1) + '</td>' +
+        '<td style="padding:8px 10px;">' + (o.pcfsystemfield1177name ? '<span style="font-size:11px;padding:2px 7px;background:var(--sky);color:var(--blue);border-radius:10px;font-weight:500;">' + o.pcfsystemfield1177name + '</span>' : (o.paymentmethod || '—')) + '</td>' +
+        '<td style="padding:8px 10px;text-align:right;font-weight:600;color:var(--navy);">' + fmtMoney(parseFloat(o.totalamount) || 0) + '</td>' +
+        '</tr>';
+    }).join('') + '</tbody></table>';
+}
+
+function toggleOrderSelect(oid, checked, clientId) {
+  if (checked) _selectedOrders.add(oid);
+  else _selectedOrders.delete(oid);
+  var btn = document.getElementById('modal-del-btn');
+  btn.style.opacity = _selectedOrders.size > 0 ? '1' : '0.5';
+}
+
+function deleteSelectedOrders() {
+  if (_selectedOrders.size === 0) { alert(t('sel_one')); return; }
+  var c = clients.find(function(x) { return x.id === window._modalClientId; });
+  if (!c) return;
+  if (!confirm(t('confirm_del_n').replace('{n}', _selectedOrders.size))) return;
+  c.orders = c.orders.filter(function(o) {
+    var oid = o.crmorderid || o.orderid;
+    return !_selectedOrders.has(oid);
+  });
+  _selectedOrders.clear();
+  renderModalOrders(c);
+  render();
+}
+
+function closeOrdersModal() {
+  document.getElementById('orders-modal').style.display = 'none';
+  _selectedOrders.clear();
+  window._modalClientId = null;
+}
+
 applyLang();
 if (token && currentUser) showApp();
 else document.getElementById('lang-btn-auth').style.display = 'flex';
 </script>
+
+<!-- ORDERS MODAL -->
+<div id="orders-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:14px;padding:24px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;margin:1rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div style="font-size:17px;font-weight:600;color:var(--navy);" id="modal-client-name">Cuotas</div>
+      <button onclick="closeOrdersModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">&#x2715;</button>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;padding-bottom:12px;border-bottom:0.5px solid var(--border);" id="modal-sub"></div>
+    <div id="modal-orders-list"></div>
+    <div style="display:flex;gap:8px;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:0.5px solid var(--border);">
+      <button onclick="removeClient(window._modalClientId)" style="padding:8px 14px;background:var(--red-bg);color:var(--red);border:0.5px solid #f5b7b1;border-radius:6px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;" id="modal-del-client"><i class="ti ti-user-off"></i> <span id="t-del-client">Eliminar cliente</span></button>
+      <div style="display:flex;gap:8px;">
+        <button onclick="closeOrdersModal()" style="padding:8px 14px;background:white;border:0.5px solid var(--border);border-radius:6px;font-size:13px;cursor:pointer;" id="t-close-modal">Cerrar</button>
+        <button onclick="deleteSelectedOrders()" style="padding:8px 16px;background:var(--red);color:white;border:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;" id="modal-del-btn"><i class="ti ti-trash"></i> <span id="t-del-orders">Eliminar seleccionadas</span></button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
