@@ -968,7 +968,8 @@ function openOrdersModal(dbId) {
   document.getElementById('t-close-modal').textContent = t('close');
   document.getElementById('t-del-orders').textContent = t('delete_orders');
   renderModalOrders(c);
-  document.getElementById('orders-modal').style.display = 'flex';
+  var modal = document.getElementById('orders-modal');
+  if (modal) modal.style.display = 'flex';
 }
 
 function renderModalOrders(c) {
@@ -1026,13 +1027,12 @@ function deleteSelectedOrders() {
 }
 
 function closeOrdersModal() {
-  document.getElementById('orders-modal').style.display = 'none';
+  var modal = document.getElementById('orders-modal');
+  if (modal) modal.style.display = 'none';
   _selectedOrders.clear();
   window._modalClientId = null;
 }
 
-// Make sure modal is hidden on load
-document.getElementById('orders-modal').style.display = 'none';
 applyLang();
 if (token && currentUser) showApp();
 else document.getElementById('lang-btn-auth').style.display = 'flex';
