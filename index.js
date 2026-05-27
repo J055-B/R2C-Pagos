@@ -199,9 +199,10 @@ app.get('/api/fireberry/orders/:recordId', auth, async (req, res) => {
       body: JSON.stringify(body)
     });
     const data = await response.json();
-    console.log('ORDERS RESPONSE keys:', Object.keys(data));
-    // Pass through raw response so frontend can parse it
-    res.json(data);
+    // Fireberry returns {success, data: {Data: [...], TotalRecords: N}, message}
+    const orders = data?.data?.Data || data?.Data || [];
+    console.log('Orders found:', orders.length);
+    res.json({ orders });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 

@@ -426,7 +426,9 @@ async function loadClients() {
   if (data.error) { logout(); return; }
   clients = data.map(c => ({ ...c, fbData: null, orders: [], loading: true, open: false, error: null, editingInvestment: false }));
   render();
-  clients.forEach((c, i) => setTimeout(() => loadClientData(c).then(render), i * 400));
+  clients.forEach((c, i) => {
+    setTimeout(() => loadClientData(c).then(() => render()), i * 600);
+  });
 }
 
 async function fetchWithTimeout(url, options = {}, ms = 10000) {
@@ -454,7 +456,7 @@ async function loadClientData(c) {
   try {
     // Fetch main record with 10s timeout
     const rec = await apiTimeout('GET', `/api/fireberry/record/${c.object_type}/${c.record_id}`);
-    c.fbData = rec?.data?.Record || rec?.Data?.Record || rec?.data || rec?.Data || rec;
+    c.fbData = rec?.data?.Record || rec?.Data?.Record || rec?.data || rec?.Data || rec || {};
   } catch(e) {
     c.fbData = {};
     c.error = 'Error cargando cliente: ' + (e.name === 'AbortError' ? 'Timeout' : e.message);
