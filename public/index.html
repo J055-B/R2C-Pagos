@@ -783,17 +783,18 @@ async function generateTicket(clientId) {
   ctx.fillText('Fecha de emisión: ' + new Date().toLocaleDateString('es-MX'), W - 280, 62);
 
   // Client info box
+  const clientBoxY = HEADER_H + 16;
   ctx.fillStyle = 'white';
-  roundRect(ctx, 24, 108, W - 48, 80, 10);
+  roundRect(ctx, 24, clientBoxY, W - 48, 80, 10);
   ctx.fillStyle = '#0a1628';
-  ctx.font = 'bold 20px -apple-system, Arial, sans-serif';
-  ctx.fillText(name, 44, 138);
-  ctx.font = '13px -apple-system, Arial, sans-serif';
+  ctx.font = 'bold 20px Arial, sans-serif';
+  ctx.fillText(name, 44, clientBoxY + 30);
+  ctx.font = '13px Arial, sans-serif';
   ctx.fillStyle = '#5a7a8a';
-  ctx.fillText((program || '') + (advisor ? '  ·  Asesor: ' + advisor : ''), 44, 162);
+  ctx.fillText((program || '') + (advisor ? '  ·  Asesor: ' + advisor : ''), 44, clientBoxY + 56);
 
   // Metrics
-  const mY = 206;
+  const mY = clientBoxY + 96;
   const mW = (W - 48 - 24) / 3;
   const metrics = [
     { label: 'Inversión Total', value: fmtMoney(totalInv), color: '#0a1628' },
@@ -813,7 +814,7 @@ async function generateTicket(clientId) {
   });
 
   // Table header
-  const tY = mY + 90;
+  const tY = mY + 86;
   ctx.fillStyle = '#0a1628';
   ctx.fillRect(24, tY, W - 48, 34);
   ctx.fillStyle = 'white';
