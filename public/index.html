@@ -552,13 +552,7 @@ async function loadClientData(c) {
     c.fbData = (rec && rec.data && rec.data.Record) ? rec.data.Record :
                (rec && rec.Data && rec.Data.Record) ? rec.Data.Record : null;
     if (!c.fbData) c.error = 'No se pudo leer el registro';
-    if (c.fbData && (!c.total_investment || parseFloat(c.total_investment) === 0)) {
-      var autoInv = parseFloat(c.fbData.pcfsystemfield3070) || 0;
-      if (autoInv > 0) {
-        c.total_investment = autoInv;
-        api('PATCH', '/api/clients/' + c.id + '/investment', { total_investment: autoInv });
-      }
-    }
+
   } catch(e) { c.fbData = null; c.error = 'Error: ' + e.message; }
   try {
     var ordersRes = await api('GET', '/api/fireberry/orders/' + c.record_id);
@@ -707,11 +701,12 @@ function renderCard(c) {
   else badge = '<span class="badge b-warn">' + t('pending_lbl') + '</span>';
 
   var invField = c.editingInvestment
-    ? '<div style="display:flex;align-items:center;gap:6px;">' +
+    ? '<div style="display:flex;align-items:center;gap:6px;" onclick="event.stopPropagation()">' +
       '<input class="invest-input" id="inv-' + c.id + '" type="number" value="' + totalInv + '"' +
+      ' onclick="event.stopPropagation()"' +
       ' onkeydown="if(event.key===\'Enter\')confirmInvestment(' + c.id + ')" />' +
-      '<button onclick="confirmInvestment(' + c.id + ')" style="padding:3px 8px;background:var(--blue);color:white;border:none;border-radius:5px;cursor:pointer;font-size:12px;white-space:nowrap;"><i class=\"ti ti-check\"></i></button>' +
-      '<button onclick="cancelInvestment(' + c.id + ')" style="padding:3px 8px;background:white;border:0.5px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px;"><i class=\"ti ti-x\"></i></button>' +
+      '<button onclick="event.stopPropagation();confirmInvestment(' + c.id + ')" style="padding:3px 8px;background:var(--blue);color:white;border:none;border-radius:5px;cursor:pointer;font-size:12px;white-space:nowrap;"><i class=\"ti ti-check\"></i></button>' +
+      '<button onclick="event.stopPropagation();cancelInvestment(' + c.id + ')" style="padding:3px 8px;background:white;border:0.5px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px;"><i class=\"ti ti-x\"></i></button>' +
       '</div>'
     : '<div class="mval">' + fmtMoney(totalInv) + '</div>' +
       '<div class="invest-hint"><i class="ti ti-edit" style="font-size:10px;"></i> ' + t('click_edit') + '</div>';
